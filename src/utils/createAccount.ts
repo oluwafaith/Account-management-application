@@ -1,5 +1,5 @@
-const createAccount = () => {
+const createAccountNumber = () => {
     return Math.random().toString().slice(2, 12)
 }
 
-export default createAccount
+export default createAccountNumber
