@@ -1,11 +1,9 @@
 import { Request, Response } from "express";
 import { saveData, transactions, users } from "../utils/store";
-import { dynamicSort } from "../utils/sort";
 
 class Account {
   static getAllTransaction = (_req: Request, res: Response) => {
     try {
-      //   const sorted = transactions.sort(dynamicSort("createdAt"));
       const sorted = transactions.sort(
         (objA: any, objB: any) =>
           Number(objB.createdAt) - Number(objA.createdAt)
@@ -25,9 +23,22 @@ class Account {
   static getTransaction = (req: Request, res: Response) => {
     try {
       const acct = req.params.account;
+
+      const user = users.find((item: {account: string}) => {
+        return item.account === acct;
+      });
+
+      if(!user){
+        return res.status(400).
+        json({
+            status:"fail",
+            message: "Invalid account",
+        })
+       }
       const transaction = transactions.filter(
         (item: any) => item.account === acct
       );
+
 
       res.status(200).json({
         status: "success",
@@ -48,6 +59,14 @@ class Account {
       const user = users.find((item: any) => {
         return item.account === account;
       });
+
+      if(!user){
+        return res.status(400).
+        json({
+            status:"fail",
+            message: "Invalid account",
+        })
+       }
 
       const transaction = {
         id: newId,
@@ -85,6 +104,15 @@ class Account {
       const user = users.find((item: any) => {
         return item.account === account;
       });
+
+      if(!user){
+        return res.status(400).
+        json({
+            status:"fail",
+            message: "Invalid account",
+        })
+       }
+
       if (amount > user.balance) {
         return res.status(404).json({
           status: "fail",

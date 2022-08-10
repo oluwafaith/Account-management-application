@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "jest --detectOpenHandles --forceExit --verbose ",
-    "start": "nodemon ./bin/www"
+    "test": "jest --detectOpenHandles --forceExit --verbose",
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "@types/jest": "^28.1.6",

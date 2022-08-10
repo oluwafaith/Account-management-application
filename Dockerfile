@@ -1,13 +1,19 @@
 FROM node:12-alpine
 
-WORKDIR /usr/src/app
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-COPY . .
+WORKDIR /home/node/app
+
+COPY package*.json ./
+
+USER node
 
 RUN yarn
+
+COPY --chown=node:node . .
 
 RUN yarn tsc
 
 EXPOSE 4000
 
-CMD [ "node", "./bin/www" ]
+CMD ["node", "./bin/www"]

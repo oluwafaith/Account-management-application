@@ -4,10 +4,8 @@ import createError, { HttpError } from  'http-errors';
 import express, { Request,Response, NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
 import logger from  'morgan';
-
 import indexRouter from './routes/index';
 import transactionRouter from './routes/transaction';
-// import authRouter from './routes/authRoute';
 import usersRouter from './routes/users';
 
 const app = express();
@@ -27,7 +25,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err:any , req:any, res:any, next:any) {
+app.use(function(err:any , req:Request, res:Response, next:NextFunction) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

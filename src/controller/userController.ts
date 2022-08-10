@@ -1,7 +1,7 @@
 import {  saveData } from './../utils/store';
 import { Request, Response } from "express";
 import { users } from "../utils/store";
-import { createAccountNumber } from "../utils/index";
+import createAccountNumber from "../utils/createAccount";
 
 export const getAllUsers = (_req: Request, res: Response) => {
   try {
