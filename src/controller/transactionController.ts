@@ -39,7 +39,6 @@ class Account {
         (item: any) => item.account === acct
       );
 
-
       res.status(200).json({
         status: "success",
         data: {
