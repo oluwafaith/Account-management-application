@@ -10,7 +10,7 @@
 | Subject     | Application structure       |
 | Decision   | Layered (n-tier) architecture      |
 |  Justification  | The application requires less time to be built    |
-| Paragraph   | Text        |
+
 ## Click on link to see documentation
 
 <https://documenter.getpostman.com/view/11291121/VUjPKRH8>
