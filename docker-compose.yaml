@@ -1,0 +1,8 @@
+version: '3.8'
+
+services: 
+  web:
+    build: .
+    image: oluwafaith/account-management 
+    ports:
+      - 4000:4000

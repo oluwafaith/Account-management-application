@@ -4,6 +4,8 @@ RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
 WORKDIR /home/node/app
 
+ENV CI=true
+
 COPY package*.json ./
 
 USER node
@@ -16,4 +18,4 @@ RUN yarn tsc
 
 EXPOSE 4000
 
-CMD ["node", "./bin/www"]
+CMD ["yarn", "start"]

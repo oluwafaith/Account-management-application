@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { saveData, transactions, users } from "../utils/store";
-
+import { v4 as uuidv4 } from 'uuid';
 class Account {
-  static getAllTransaction = (_req: Request, res: Response) => {
+  static getAllTransaction = (_req: Request, res: Response, next: NextFunction) => {
     try {
       const sorted = transactions.sort(
         (objA: any, objB: any) =>
@@ -16,11 +16,12 @@ class Account {
         },
       });
     } catch (error) {
-      console.log(error);
+      
+      next(error);
     }
   };
 
-  static getTransaction = (req: Request, res: Response) => {
+  static getTransaction = (req: Request, res: Response, next: NextFunction) => {
     try {
       const acct = req.params.account;
 
@@ -46,13 +47,12 @@ class Account {
         },
       });
     } catch (error) {
-      console.log(error);
+      next(error)
     }
   };
 
-  static deposit = (req: Request, res: Response) => {
+  static deposit = (req: Request, res: Response, next: NextFunction) => {
     try {
-      const newId = transactions[transactions.length - 1].id + 1;
       const { amount, account } = req.body;
 
       const user = users.find((item: any) => {
@@ -68,7 +68,7 @@ class Account {
        }
 
       const transaction = {
-        id: newId,
+        id: uuidv4(),
         amount,
         name: user.name,
         createdAt: Math.floor(new Date().getTime() / 1000).toFixed(0),
@@ -90,14 +90,17 @@ class Account {
           totalBalance: newTransaction.balanceAfter,
         },
       });
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      if (error) {
+        res.status(400).json({ error: { message: error.message } })
+        return
+      }
+      next(error);
     }
   };
 
-  static withdraw = (req: Request, res: Response) => {
+  static withdraw = (req: Request, res: Response, next: NextFunction) => {
     try {
-      const newId = transactions[transactions.length - 1].id + 1;
       const { amount, account } = req.body;
 
       const user = users.find((item: any) => {
@@ -120,9 +123,10 @@ class Account {
       }
 
       const transaction = {
-        id: newId,
-        amount,
+        id: uuidv4,
         name: user.name,
+        amount,
+        account,
         email: user.email,
         balanceBefore: user.balance,
         balanceAfter: (user.balance -= Number(amount)),
@@ -142,7 +146,7 @@ class Account {
         },
       });
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   };
 }
