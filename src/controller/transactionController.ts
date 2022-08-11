@@ -1,8 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { saveData, transactions, users } from "../utils/store";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 class Account {
-  static getAllTransaction = (_req: Request, res: Response, next: NextFunction) => {
+  static getAllTransaction = (
+    _req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const sorted = transactions.sort(
         (objA: any, objB: any) =>
@@ -16,7 +20,6 @@ class Account {
         },
       });
     } catch (error) {
-      
       next(error);
     }
   };
@@ -25,17 +28,16 @@ class Account {
     try {
       const acct = req.params.account;
 
-      const user = users.find((item: {account: string}) => {
+      const user = users.find((item: { account: string }) => {
         return item.account === acct;
       });
 
-      if(!user){
-        return res.status(400).
-        json({
-            status:"fail",
-            message: "Invalid account",
-        })
-       }
+      if (!user) {
+        return res.status(400).json({
+          status: "fail",
+          message: "Invalid account",
+        });
+      }
       const transaction = transactions.filter(
         (item: any) => item.account === acct
       );
@@ -47,7 +49,7 @@ class Account {
         },
       });
     } catch (error) {
-      next(error)
+      next(error);
     }
   };
 
@@ -59,13 +61,12 @@ class Account {
         return item.account === account;
       });
 
-      if(!user){
-        return res.status(400).
-        json({
-            status:"fail",
-            message: "Invalid account",
-        })
-       }
+      if (!user) {
+        return res.status(400).json({
+          status: "fail",
+          message: "Invalid account",
+        });
+      }
 
       const transaction = {
         id: uuidv4(),
@@ -92,8 +93,8 @@ class Account {
       });
     } catch (error: any) {
       if (error) {
-        res.status(400).json({ error: { message: error.message } })
-        return
+        res.status(400).json({ error: { message: error.message } });
+        return;
       }
       next(error);
     }
@@ -107,13 +108,12 @@ class Account {
         return item.account === account;
       });
 
-      if(!user){
-        return res.status(400).
-        json({
-            status:"fail",
-            message: "Invalid account",
-        })
-       }
+      if (!user) {
+        return res.status(400).json({
+          status: "fail",
+          message: "Invalid account",
+        });
+      }
 
       if (amount > user.balance) {
         return res.status(404).json({

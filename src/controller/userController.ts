@@ -17,7 +17,7 @@ export const getAllUsers = (
       },
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
@@ -40,7 +40,7 @@ export const createAccount = (req: Request, res: Response) => {
   res.status(201).json({
     status: "success",
     data: {
-      accountNumber: newUser.account
+      accountNumber: newUser.account,
     },
   });
 };
