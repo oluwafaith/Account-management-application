@@ -4,16 +4,22 @@ import createError from  'http-errors';
 import express, { Request,Response, NextFunction } from 'express';
 import cookieParser from 'cookie-parser';
 import logger from  'morgan';
+import cors from "cors";
+import helmet from "helmet";
+
 import indexRouter from './routes/index';
 import transactionRouter from './routes/transaction';
 import usersRouter from './routes/users';
 
 const app = express();
 
+app.use(cors());
+app.use(helmet());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 
 app.use('/', indexRouter);
 app.use('/api/v1/transaction', transactionRouter);
