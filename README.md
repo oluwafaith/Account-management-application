@@ -1,7 +1,7 @@
 # Account Management application Summary 
 
 ### Issue
-<p> Build an account management application that supports the creation of a new account, deposit, transaction log, and withdrawal </p>
+<p> An account management application that supports the creation of a new account, deposit, transaction log, and withdrawal </p>
 
 
 ### Decision
